@@ -1,4 +1,6 @@
-from ba_fantom_src.StateInfo import StateInfo
+'''This file contains the algorythm of choices for the Inspector A.I'''
+
+from Brice_src.Inspector_stateInfo import StateInfo
 
 stateInfo = StateInfo()
 
@@ -34,6 +36,6 @@ class MinMax:
         return stateInfo.findBestConfiguration(ratios)
     
     def calculateBestPower(self, state, question):
-        if (question == "activate black power"):
+        if (question == "activate white power"):
             return 1
         return 0

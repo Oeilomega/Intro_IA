@@ -4,8 +4,8 @@ import os
 import random
 import socket
 from logging.handlers import RotatingFileHandler
-from ba_inspector_src.StateInfo import StateInfo
-from ba_inspector_src.MinMax import MinMax
+from Brice_src.Inspector_stateInfo import StateInfo
+from Brice_src.Inspector_minMax import MinMax
 
 import protocol
 

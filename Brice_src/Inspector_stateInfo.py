@@ -1,10 +1,11 @@
+'''This file contains everything about the state of the game and how its treated by the Inspector A.I'''
+
 class StateInfo:
     
     def getSuspectSeparation(self, state):
         playersSolo = []
         playersGroup = []
         suspectNb = 0
-        fantom_color = state['fantom']
 
         for player in state['characters']:
             if (player['suspect']):
@@ -20,50 +21,32 @@ class StateInfo:
             if (len(playersInPos) > 1):
                 for char in playersInPos:
                     if (char['suspect']):
-                        if (char['color'] == fantom_color):
-                            fantom_state = 'group'
                         playersGroup.append(char)
             elif (len(playersInPos) == 1):
                 if (playersInPos[0]['suspect']):
-                    if (playersInPos[0]['color'] == fantom_color):
-                        fantom_state = 'solo'
                     playersSolo.append(playersInPos)
 
         suspectsRatio = {
             'solo': len(playersSolo),
-            'group': len(playersGroup),
-            'fantom': fantom_state
+            'group': len(playersGroup)
         }
         return (suspectsRatio)
     
     def findBestConfiguration(self, ratios):
         index = 0
+        inspector_best = []
         for config in ratios:
-            if (config['group'] == 0):
-                return index
+            inspector_best.append(config['group'] - config['solo'])
+            if (inspector_best[index] < 0):
+                inspector_best[index] = 0 - inspector_best[index]
             index += 1
-        
         index = 0
-        for config in ratios:
-            if (config['solo'] == 0):
-                return index
+        best_pos = 0
+        for value in inspector_best:
+            if (value < inspector_best[best_pos]):
+                best_pos = index
             index += 1
-        
-        index = 0
-        fantom_best = []
-        for config in ratios:
-            if (config['fantom'] == 'group'):
-                if (config['group'] >= config['solo']):
-                    fantom_best.append(['group', config['group'], index])    
-                else:
-                    fantom_best.append(['solo', config['solo'], index])
-            else:
-                if (config['solo'] >= config['group']):
-                    fantom_best.append(['solo', config['solo'], index])
-                else:
-                    fantom_best.append(['group', config['group'], index])
-            index += 1
-        return fantom_best[0][2]
+        return best_pos
 
     def isCharSuspect(self, char, state):
         for player in state['characters']:
