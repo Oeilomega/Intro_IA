@@ -22,7 +22,6 @@ class MinMax:
         return 0
 
     def calculateBestPosition(self, state, positions):
-        print (self.currentChar)
         ratios = []
         p_pos = -1
         for player in state['characters']:

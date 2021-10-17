@@ -54,7 +54,6 @@ class Player():
         # work
         data = question["data"]
         game_state = question["game state"]
-        print(question["question type"])
         pos = 0
         if (question['question type'] == "select character"):
             pos = minMax.calculateBestChoiceCharacter(game_state, data)
@@ -62,7 +61,6 @@ class Player():
             pos = minMax.calculateBestPosition(game_state, data)
         else:
             pos = minMax.calculateBestPower(game_state, question["question type"])
-        print("")
         return pos
 
     def handle_json(self, data):
