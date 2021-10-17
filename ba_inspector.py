@@ -4,8 +4,8 @@ import os
 import random
 import socket
 from logging.handlers import RotatingFileHandler
-from ba_fantom_src.StateInfo import StateInfo
-from ba_fantom_src.MinMax import MinMax
+from ba_inspector_src.StateInfo import StateInfo
+from ba_inspector_src.MinMax import MinMax
 
 import protocol
 
@@ -14,23 +14,23 @@ port = 12000
 # HEADERSIZE = 10
 
 """
-set up fantom logging
+set up inspector logging
 """
-fantom_logger = logging.getLogger()
-fantom_logger.setLevel(logging.DEBUG)
+inspector_logger = logging.getLogger()
+inspector_logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter(
     "%(asctime)s :: %(levelname)s :: %(message)s", "%H:%M:%S")
 # file
-if os.path.exists("./logs/fantom.log"):
-    os.remove("./logs/fantom.log")
-file_handler = RotatingFileHandler('./logs/fantom.log', 'a', 1000000, 1)
+if os.path.exists("./logs/inspector.log"):
+    os.remove("./logs/inspector.log")
+file_handler = RotatingFileHandler('./logs/inspector.log', 'a', 1000000, 1)
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
-fantom_logger.addHandler(file_handler)
+inspector_logger.addHandler(file_handler)
 # stream
 stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.WARNING)
-fantom_logger.addHandler(stream_handler)
+inspector_logger.addHandler(stream_handler)
 
 
 stateInfo = StateInfo()
@@ -55,6 +55,7 @@ class Player():
         data = question["data"]
         game_state = question["game state"]
         pos = 0
+        print(question['question type'])
         if (question['question type'] == "select character"):
             pos = minMax.calculateBestChoiceCharacter(game_state, data)
         elif (question['question type'] == "select position"):

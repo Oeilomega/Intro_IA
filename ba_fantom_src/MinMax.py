@@ -1,4 +1,4 @@
-from ba_phantom_src.StateInfo import StateInfo
+from ba_fantom_src.StateInfo import StateInfo
 
 stateInfo = StateInfo()
 
